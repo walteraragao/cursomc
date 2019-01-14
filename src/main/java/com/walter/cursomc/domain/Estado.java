@@ -8,59 +8,58 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
-@Table(name="TB_CATEGORIA")
-public class Categoria implements Serializable {
+@Table(name="TB_ESTADO")
+public class Estado implements Serializable {
 
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	
-	public Categoria() {}
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	
-	/*** 
-	 * Anotação para garantir que nao vai haver loop de busca
-	 * Colocar @JsonManagedReference aonde quisermos que os dados sejam buscados
-	 * Colocar @JsonBackReference na outra ponta aonde os dados nao serão buscados
-	 * ***/
-	@JsonManagedReference
-	@ManyToMany(mappedBy="categorias")
-	private List<Produto> produtos = new ArrayList<Produto>();
+	@OneToMany(mappedBy="estado")
+	private List<Cidade> cidades = new ArrayList<Cidade>();
 	
-	public Categoria(Integer id, String nome) {
+	public Estado() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
 
-	public List<Produto> getProdutos() {
-		return produtos;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -79,7 +78,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -87,7 +86,6 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-	
 	
 	
 }

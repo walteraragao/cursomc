@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.walter.cursomc.domain.Categoria;
 import com.walter.cursomc.service.CategoriaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaResource {
@@ -18,7 +20,7 @@ public class CategoriaResource {
 	private CategoriaService service;
 
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<?> find(@PathVariable Integer id) throws ObjectNotFoundException {
 
 		Categoria categoria = this.service.buscar(id);
 		return ResponseEntity.ok(categoria);
